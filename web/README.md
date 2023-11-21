@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Resumo do funcionamento do projeto
 
-## Getting Started
+## 1. Usuarios
 
-First, run the development server:
+### 1.1 Treinador
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Posso cadastrar um treino
+- Posso atrelar um treino a um aluno
+- Posso ver os treinos de um aluno
+- Posso adicionar os dados antropometricos de um aluno
+- Posso ver o progresso dos meus alunos em cada treino (ver evolucao das cargas e etc)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 1.2 Aluno
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Posso ver os treinos que meu treinador me passou
+- Posso ver meus dados antropometricos
+- Posso ver meu progresso
+- Posso ver meus treinos passados (como foi o rendimento de cada treino)
+- Posso iniciar um treino
+  - Posso adicionar a carga que estou usando no momento (dado que sera usado para ver meu progresso)
+  - Posso adicionar um comentario em cada exercicio
+  - Posso adicionar um comentario no treino como um todo
+  - Posso iniciar um cronometro para o descanso entre as series
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### 1.3 Administrador
 
-## Learn More
+- Posso cadastrar um treinador
+- Posso cadastrar um aluno
+- Posso ver os treinos de um aluno
+- Posso ver os dados antropometricos de um aluno
+- Posso ver os alunos de cada treinador
+- Posso ver os treinos de cada treinador
+- Posso ver tudo na verdade
 
-To learn more about Next.js, take a look at the following resources:
+## Tecnologias
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [x] React
+- [x] Next.js
+- [x] Tailwind
+- [x] Typescript
+- [x] Shadcn
+- [ ] React Query
+- [x] React Hook Form
+- [x] React Icons
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Partes importantes que precisam ser revistas
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+> Como, teoricamente, a maioria dos usuarios iria utilizar enquanto esta no treino, precisa ter boa compatibilidade com mobile

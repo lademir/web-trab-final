@@ -23,13 +23,13 @@ const LoginPage: NextPage = () => {
         event.preventDefault();
         setIsLoading(true);
 
-        handleSubmit((data) => {
+        await handleSubmit((data) => {
             console.log(data);
         });
 
         setTimeout(() => {
             setIsLoading(false);
-            router.push("/");
+            router.push("/dashboard");
         }, 3000);
     }
 
