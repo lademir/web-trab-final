@@ -36,12 +36,12 @@
 
 - [x] React
 - [x] Next.js
-- [x] Tailwind
-- [x] Typescript
-- [x] Shadcn
-- [ ] React Query
-- [x] React Hook Form
-- [x] React Icons
+- [x] Tailwind (CSS lib)
+- [x] Typescript (Tipagem)
+- [x] Shadcn (Componentes)
+- [ ] React Query (So quando for usar o backend e olhe la kk)
+- [x] React Hook Form (Facilidade de manipulacao de formularios)
+- [x] React Icons (Biblioteca de icones)
 
 ## Partes importantes que precisam ser revistas
 
