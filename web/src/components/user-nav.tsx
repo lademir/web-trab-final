@@ -52,8 +52,8 @@ export const UserNav = () => {
 
 
     return (
-        <nav className="bg-slate-800 h-5 flex items-center p-7 border-b border-slate-700">
-            <span className="flex mx-24 justify-between w-full">
+        <nav className="bg-slate-800 h-5 flex items-center justify-center p-7 border-b border-slate-700">
+            <span className="flex max-w-7xl justify-between w-full">
                 <span className="flex items-center">
                     BoraTreinar
                 </span>
