@@ -7,14 +7,17 @@ export default function Home() {
     {
       workoutTag: 'A',
       workoutName: 'Peito e Triceps',
+      id: '1',
     },
     {
       workoutTag: 'B',
       workoutName: 'Costas e Biceps',
+      id: '2',
     },
     {
       workoutTag: 'C',
       workoutName: 'Ombro e Perna',
+      id: '3',
     },
   ];
 
@@ -30,6 +33,7 @@ export default function Home() {
               key={workout.workoutTag}
               workoutTag={workout.workoutTag}
               workoutName={workout.workoutName}
+              workoutId={workout.id}
             />
           ))}
         </div>
