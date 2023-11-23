@@ -16,7 +16,6 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center justify-between p-24">
       pagina mostrando um pouco do app, ainda a ser feita
-      <Button onClick={handleLogin}>Login</Button>
       <Link href={'/login'} type='primary'>Login</Link>
     </main>
   );
