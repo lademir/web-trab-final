@@ -73,15 +73,15 @@ export const UserNav = () => {
                         <DropdownMenuSeparator className="bg-slate-500" />
                         {
                             menuItems.map((item, index) => (
-                                <DropdownMenuItem key={index} className="hover:bg-slate-500">
-                                    <Link className="flex-1 hover:text-slate-50" href={item.href}>
+                                <DropdownMenuItem key={index} className="focus:bg-slate-900">
+                                    <Link className="flex-1 " href={item.href}>
                                         {item.label}
                                     </Link>
                                 </DropdownMenuItem>
                             ))
                         }
                         <DropdownMenuSeparator className="bg-slate-500" />
-                        <DropdownMenuItem className="hover:bg-slate-500">
+                        <DropdownMenuItem className="focus:bg-slate-900">
                             <Link className="flex-1" href="/login">
                                 Sair
                             </Link>
