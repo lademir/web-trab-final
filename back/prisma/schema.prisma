@@ -11,19 +11,31 @@ datasource db {
 }
 
 model Role {
-  rid        Int      @id @default(autoincrement())
-  name      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  rid       Int         @id @default(autoincrement())
+  name      String      @unique
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  UserRoles UserRoles[]
 }
 
 model User {
-  uid        Int      @id @default(autoincrement())
-  email     String   @unique
+  id        Int         @id @default(autoincrement())
+  email     String      @unique
   name      String?
   password  String
-  role      Role[]     @relation(fields: [rid], references: [uid])    
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  UserRoles UserRoles[]
 }
 
+// um user pode ter varias roles (user, admin, etc)
+model UserRoles {
+  user    User @relation(fields: [userUid], references: [id])
+  userUid Int
+  role    Role @relation(fields: [roleRid], references: [rid])
+  roleRid Int
+
+  assignedAt DateTime @default(now())
+
+  @@id([userUid, roleRid])
+}
