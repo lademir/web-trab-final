@@ -19,13 +19,18 @@ model Role {
 }
 
 model User {
-  id        Int         @id @default(autoincrement())
-  email     String      @unique
-  name      String?
-  password  String
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-  UserRoles UserRoles[]
+  id         Int          @id @default(autoincrement())
+  email      String       @unique
+  name       String?
+  password   String
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  UserRoles  UserRoles[]
+  Workouts   Workout[]
+  student    Student?
+  trainer    Trainer?
+  admin      Admin?
+  WorkoutLog WorkoutLog[]
 }
 
 // um user pode ter varias roles (user, admin, etc)
@@ -38,4 +43,84 @@ model UserRoles {
   assignedAt DateTime @default(now())
 
   @@id([userUid, roleRid])
+}
+
+model Student {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User     @relation(fields: [id], references: [id])
+  UserId    Int      @unique
+  trainerId Int?
+  Trainer   Trainer? @relation("TrainerStudents", fields: [trainerId], references: [id])
+}
+
+model Trainer {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  User      User      @relation(fields: [id], references: [id])
+  UserId    Int       @unique
+  Students  Student[] @relation("TrainerStudents")
+}
+
+model Admin {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User     @relation(fields: [id], references: [id])
+  UserId    Int      @unique
+}
+
+model Exercise {
+  id          Int               @id @default(autoincrement())
+  name        String
+  description String?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  Workouts    ExerciseWorkout[]
+}
+
+model Workout {
+  id         Int               @id @default(autoincrement())
+  name       String
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+  Exercises  ExerciseWorkout[]
+  User       User?             @relation(fields: [userId], references: [id])
+  userId     Int?
+  WorkoutLog WorkoutLog[]
+}
+
+model ExerciseWorkout {
+  exercise   Exercise @relation(fields: [exerciseId], references: [id])
+  exerciseId Int
+  workout    Workout  @relation(fields: [workoutId], references: [id])
+  workoutId  Int
+
+  series     Series[]
+  assignedAt DateTime @default(now())
+
+  @@id([exerciseId, workoutId])
+}
+
+model Series {
+  id                        Int              @id @default(autoincrement())
+  reps                      Int
+  weight                    Int
+  ExerciseWorkout           ExerciseWorkout? @relation(fields: [exerciseWorkoutExerciseId, exerciseWorkoutWorkoutId], references: [exerciseId, workoutId])
+  exerciseWorkoutExerciseId Int?
+  exerciseWorkoutWorkoutId  Int?
+}
+
+// Create a workout log for a user
+model WorkoutLog {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  volume    Int
+  updatedAt DateTime @updatedAt
+  User      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  Workout   Workout  @relation(fields: [workoutId], references: [id])
+  workoutId Int
 }
