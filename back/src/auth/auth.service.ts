@@ -24,10 +24,10 @@ export class AuthService {
       },
     });
     if (!user) {
-      throw new HttpException('User not found', 404);
+      throw new HttpException('Usuário não encontrado', 404);
     }
     if (user.password !== signInDto.password) {
-      throw new UnauthorizedException('Invalid Credentials');
+      throw new UnauthorizedException('Credenciais inválidas');
     }
     // jwt
     const payload = {

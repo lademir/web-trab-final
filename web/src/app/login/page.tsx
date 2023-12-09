@@ -11,10 +11,13 @@ import { useState } from "react";
 import { set, useForm } from "react-hook-form";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { login } from "./fn";
-import { UserStore } from "@/lib/state/user-store";
+import Axios from "axios";
+import { useToast } from "@/components/ui/use-toast";
+import { typeError } from "@/lib/utils";
 
 const LoginPage: NextPage = () => {
     const router = useRouter();
+    const { toast } = useToast();
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -25,8 +28,15 @@ const LoginPage: NextPage = () => {
 
         try {
             const res = await login(data);
-            window.location.href = '/dashboard';
-        } catch (error) {
+            // window.location.href = '/dashboard';
+            router.push('/dashboard');
+        } catch (error: any) {
+            // console.log(error);
+            // console.log(error);
+            toast({
+                title: "Falha ao autenticar",
+                variant: "destructive"
+            });
 
         } finally {
             setIsLoading(false);

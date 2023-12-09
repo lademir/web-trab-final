@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { UserNav } from '@/components/user-nav';
+import { Toaster } from '@/components/ui/toaster';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,6 +22,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
         {children}
+        <Toaster />
       </body>
     </html>
   );
