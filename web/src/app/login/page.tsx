@@ -6,31 +6,34 @@ import { Input } from "@/components/ui/input";
 import { Metadata, NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { login } from "./fn";
+import { UserStore } from "@/lib/state/user-store";
 
 const LoginPage: NextPage = () => {
-
     const router = useRouter();
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    async function onSubmit(event: React.BaseSyntheticEvent) {
-        event.preventDefault();
+    async function onSubmit(data: any) {
         setIsLoading(true);
 
-        await handleSubmit((data) => {
-            console.log(data);
-        });
+        try {
+            const res = await login(data);
+            window.location.href = '/dashboard';
+        } catch (error) {
 
-        setTimeout(() => {
+        } finally {
             setIsLoading(false);
-            router.push("/dashboard");
-        }, 3000);
+
+        }
+
+
     }
 
     return (
@@ -40,7 +43,7 @@ const LoginPage: NextPage = () => {
                     <Image src="/logo.png" alt="BoraTreinar" className="m-auto" width={200} height={200} />
                 </CardHeader>
                 <CardContent className="text-slate-900">
-                    <form className="" onSubmit={onSubmit}>
+                    <form className="" onSubmit={handleSubmit(onSubmit)}>
                         <Input type="email" placeholder="E-mail" className="w-full focus-visible:ring-offset-0" {...register('email',
                             {
                                 required: 'E-mail obrigatório',

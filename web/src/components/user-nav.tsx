@@ -11,19 +11,23 @@ import {
 import { useRouter } from "next/navigation";
 import { Link } from "./link";
 import { UserNavButton } from "./user-nav-button";
+import { Button } from "./ui/button";
+import { logout } from "@/app/login/fn";
 
 
 export const UserNav = () => {
 
-    // const router = useRouter();
+    const router = useRouter();
 
 
 
 
-    const handleLogout = () => {
-        // signOut();
+    const handleLogout = async () => {
+        await logout();
+        console.log('logout');
+        router.push('/login');
+        // window.location.href = '/login';
 
-        // router.push("/login");
     };
 
 
@@ -65,6 +69,9 @@ export const UserNav = () => {
                             </UserNavButton>
                         ))
                     }
+                    <Button onClick={handleLogout}>
+                        Sair
+                    </Button>
                 </span>
                 <DropdownMenu>
                     <DropdownMenuTrigger className="hover:bg-slate-700 p-2 rounded">Menu</DropdownMenuTrigger>
@@ -82,9 +89,7 @@ export const UserNav = () => {
                         }
                         <DropdownMenuSeparator className="bg-slate-500" />
                         <DropdownMenuItem className="focus:bg-slate-900">
-                            <Link className="flex-1" href="/login">
-                                Sair
-                            </Link>
+
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
