@@ -6,12 +6,17 @@ export function middleware(request: NextRequest) {
 	if (request.nextUrl.pathname.startsWith("/login") && cookie) {
 		return NextResponse.redirect(new URL("/dashboard", request.url));
 	}
-
 	if (request.nextUrl.pathname.startsWith("/dashboard") && !cookie) {
 		return NextResponse.redirect(new URL("/login", request.url));
 	}
+
+	if (request.nextUrl.pathname === "/") {
+		// console.log("middleware");
+		return NextResponse.redirect(new URL("/login", request.url));
+	}
+	// console.log(request.nextUrl.pathname);
 }
 
-export const config = {
-	matcher: ["/login", "/dashboard/:path*"],
-};
+// export const config = {
+// 	matcher: ["/login", "/dashboard/:path*"],
+// };
