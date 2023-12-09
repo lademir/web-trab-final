@@ -1,4 +1,12 @@
-import { Controller, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Body,
+  Put,
+  Delete,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service'; // Replace with your Prisma service file
 
 @Controller('exercises')

@@ -1,5 +1,15 @@
-import { Controller, Get, Param, Post, Body, Put, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Body,
+  Put,
+  Delete,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
 export class UserController {
@@ -18,14 +28,14 @@ export class UserController {
   }
 
   @Post()
-  async createUser(@Body() userData: any) {
+  async createUser(@Body() userData: CreateUserDto) {
     return this.prisma.user.create({
       data: userData,
     });
   }
 
   @Put(':id')
-  async updateUser(@Param('id') id: number, @Body() userData: any) {
+  async updateUser(@Param('id') id: number, @Body() userData: UpdateUserDto) {
     return this.prisma.user.update({
       where: { id },
       data: userData,
