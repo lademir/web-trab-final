@@ -1,4 +1,4 @@
-import { UserNav } from "@/components/user-nav";
+import { UserNav } from "@/components/user-nav/user-nav";
 import { SetStateFromJwt } from "../login/fn";
 import { UserStore } from "@/lib/state/user-store";
 
