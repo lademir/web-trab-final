@@ -14,13 +14,17 @@ import { UserNavButton } from "./user-nav-button";
 import { Button } from "./ui/button";
 import { logout } from "@/app/login/fn";
 
+interface UserNavProps {
+    name: string;
+}
 
-export const UserNav = () => {
+
+export const UserNav = ({ name }: UserNavProps) => {
 
     const router = useRouter();
 
 
-
+    const hello = name ? `Olá, ${name}!` : "Olá!";
 
     const handleLogout = async () => {
         await logout();
@@ -59,7 +63,7 @@ export const UserNav = () => {
         <nav className="bg-slate-800 h-5 flex items-center justify-center p-7 border-b border-slate-700">
             <span className="flex max-w-7xl justify-between w-full">
                 <span className="flex items-center">
-                    BoraTreinar
+                    {hello}
                 </span>
                 <span className="flex items-center flex-1 px-16">
                     {
