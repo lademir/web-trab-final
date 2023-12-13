@@ -10,9 +10,16 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { SignUp } from './fn';
+import { toast } from '@/components/ui/use-toast';
 
-
-
+interface FormFields {
+    name: string;
+    email: string;
+    emailConfirmation: string;
+    password: string;
+    passwordConfirmation: string;
+}
 
 
 const RegisterPage = () => {
@@ -24,10 +31,24 @@ const RegisterPage = () => {
         watch,
         setError,
         formState: { errors }
-    } = useForm();
+    } = useForm<FormFields>();
 
-    const handleRegister = () => {
-        // Lógica para registrar o usuário
+    const handleRegister = async (data: FormFields) => {
+        try {
+            await SignUp({
+                name: data.name,
+                email: data.email,
+                password: data.password
+            });
+
+            router.push('/login');
+        } catch (error) {
+            toast({
+                title: "Erro",
+                description: "Erro ao fazer o cadastro :(",
+                variant: 'destructive',
+            });
+        }
     };
 
     return (
@@ -39,8 +60,14 @@ const RegisterPage = () => {
                 </CardHeader>
                 <CardContent className="text-slate-900">
                     <p className='text-slate-50 text-center pb-5 text-2xl'>Cadastre-se</p>
-                    <form className='' onSubmit={handleSubmit((data) => alert(JSON.stringify(data)))}>
+                    <form className='' onSubmit={handleSubmit(handleRegister)}>
                         <ul className='gap-y-2 flex flex-col'>
+                            <Input type="text" placeholder="Nome" className="w-full border-none" {...register("name", {
+                                required: "Nome obrigatório"
+                            })} />
+                            {
+                                errors.name && <p className='text-red-500 text-xs'>{errors.name.message as string}</p>
+                            }
                             <Input type="email" placeholder="E-mail" className="w-full border-none" {...register('email', {
                                 required: 'E-mail obrigatório'
                             })} />
