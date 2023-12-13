@@ -6,7 +6,9 @@ generator client {
 }
 
 generator erd {
-  provider = "prisma-erd-generator"
+  provider     = "prisma-erd-generator"
+  output       = "erd.pdf"
+  disableEmoji = true
 }
 
 datasource db {
@@ -63,7 +65,7 @@ model Trainer {
   id        Int       @id @default(autoincrement())
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  User      User      @relation(fields: [id], references: [id])
+  User      User      @relation(fields: [UserId], references: [id])
   UserId    Int       @unique
   Students  Student[] @relation("TrainerStudents")
 }

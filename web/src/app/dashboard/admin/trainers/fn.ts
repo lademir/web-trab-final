@@ -16,3 +16,13 @@ export async function getNonTrainers() {
 		throw error;
 	}
 }
+
+export async function addTrainer(id: number) {
+	try {
+		const res = await api.post("/admin/addtrainer", { id });
+		console.log(res);
+		return res.data;
+	} catch (error) {
+		throw error;
+	}
+}

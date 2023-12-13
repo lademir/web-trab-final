@@ -6,13 +6,15 @@ const ManageTrainersPage = async () => {
 
     const nonTrainers = await getNonTrainers();
 
+
+
     return (
         <div className="flex flex-col flex-1">
             <h1>Gerencia os treinadores</h1>
-            <Card className="bg-slate-500 border-none">
-                <CardContent className="">
-                    <NonTrainerTable nonTrainers={nonTrainers} />
-                </CardContent>
+            <Card className="bg-slate-700 max-w-3xl w-full self-center  border-none p-5">
+                {/* <CardContent className=""> */}
+                <NonTrainerTable nonTrainers={nonTrainers} />
+                {/* </CardContent> */}
             </Card>
         </div>
     );

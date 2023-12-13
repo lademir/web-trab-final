@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreateTrainerDto } from './dto/create-trainer.dto';
 
@@ -18,36 +18,51 @@ export class AdminService {
           },
         },
       },
+      //   include: {
+      //     UserRoles: {
+      //       include: {
+      //         role: true,
+      //       },
+      //     },
+      //   },
     });
     const res = notTrainers.map((user) => ({
       id: user.id,
       name: user.name,
     }));
+    // console.log(notTrainers);
     return res;
   }
 
   async createTrainer({ id }: CreateTrainerDto) {
-    const res = await this.prisma.trainer.create({
-      data: {
-        UserId: +id,
-      },
-    });
-    const res2 = await this.prisma.user.update({
-      where: { id: +id },
-      data: {
-        UserRoles: {
-          create: {
-            role: {
-              connect: {
-                name: 'trainer',
+    try {
+      const res = await this.prisma.trainer.create({
+        data: {
+          UserId: +id,
+        },
+      });
+      // console.log(res);
+      const res2 = await this.prisma.user.update({
+        where: { id: +id },
+        data: {
+          UserRoles: {
+            create: {
+              role: {
+                connect: {
+                  name: 'trainer',
+                },
               },
             },
           },
         },
-      },
-    });
+      });
 
-    return Promise.all([res, res2]);
+      console.log(res2);
+
+      return Promise.all([res, res2]);
+    } catch (error) {
+      throw new ConflictException('Usuário já é treinador');
+    }
   }
 
   async removeTrainer({ id }: CreateTrainerDto) {
@@ -56,6 +71,7 @@ export class AdminService {
         UserId: +id,
       },
     });
+    console.log(res);
     const res2 = await this.prisma.user.update({
       where: { id: +id },
       data: {
@@ -64,6 +80,7 @@ export class AdminService {
         },
       },
     });
+    console.log(res2);
 
     return Promise.all([res, res2]);
   }
