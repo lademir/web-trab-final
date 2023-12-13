@@ -18,17 +18,11 @@ export class AdminService {
           },
         },
       },
-      //   include: {
-      //     UserRoles: {
-      //       include: {
-      //         role: true,
-      //       },
-      //     },
-      //   },
     });
     const res = notTrainers.map((user) => ({
       id: user.id,
       name: user.name,
+      email: user.email,
     }));
     // console.log(notTrainers);
     return res;
@@ -57,7 +51,7 @@ export class AdminService {
         },
       });
 
-      console.log(res2);
+      // console.log(res2);
 
       return Promise.all([res, res2]);
     } catch (error) {
@@ -80,8 +74,29 @@ export class AdminService {
         },
       },
     });
-    console.log(res2);
+    // console.log(res2);
 
     return Promise.all([res, res2]);
+  }
+
+  async getAllTrainers() {
+    const trainers = await this.prisma.trainer.findMany({
+      include: {
+        User: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+      },
+    });
+    const res = trainers.map((trainer) => ({
+      id: trainer.UserId,
+      name: trainer.User.name,
+      email: trainer.User.email,
+    }));
+    // console.log(trainers);
+    return res;
   }
 }

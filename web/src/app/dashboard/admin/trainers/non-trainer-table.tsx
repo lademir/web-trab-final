@@ -5,16 +5,18 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { CheckboxItem } from "@radix-ui/react-dropdown-menu";
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { useState } from "react";
-import { addTrainer } from "./fn";
+import { addTrainer, removeTrainer } from "./fn";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 export type NonTrainer = {
     id: number;
     name: string;
+    email: string;
 };
 
 interface NonTrainerTableProps {
     nonTrainers: NonTrainer[];
+    type: 'trainer' | 'non-trainer';
 }
 
 const columns: ColumnDef<NonTrainer>[] = [
@@ -41,10 +43,14 @@ const columns: ColumnDef<NonTrainer>[] = [
     {
         accessorKey: 'name',
         header: 'Nome',
+    },
+    {
+        accessorKey: 'email',
+        header: 'E-mail',
     }
 ];
 
-export const NonTrainerTable = ({ nonTrainers }: NonTrainerTableProps) => {
+export const NonTrainerTable = ({ nonTrainers, type }: NonTrainerTableProps) => {
 
     const [selectedRow, setSelectedRow] = useState({});
     const router = useRouter();
@@ -75,6 +81,24 @@ export const NonTrainerTable = ({ nonTrainers }: NonTrainerTableProps) => {
                 variant: "destructive"
             });
         }
+        table.setRowSelection({});
+    };
+
+    const handleDeleteTrainer = async () => {
+        try {
+            await removeTrainer(table.getSelectedRowModel().rows[0].original.id);
+            router.refresh();
+            toast({
+                title: 'Treinador excluído com sucesso!',
+            });
+        } catch (error: any) {
+            const msg = error.response.data.message || 'Erro ao excluir treinador!';
+            toast({
+                title: msg,
+                variant: "destructive"
+            });
+        }
+        table.setRowSelection({});
     };
 
     // console.log(JSON.stringify(selectedRow));
@@ -126,8 +150,8 @@ export const NonTrainerTable = ({ nonTrainers }: NonTrainerTableProps) => {
                 </TableBody>
             </Table>
             {/* <span className="w-full flex justify-center"> */}
-            <Button className="w-full" onClick={handleCreateTrainer}>
-                Atribuir treinador
+            <Button className="w-full" onClick={type === 'non-trainer' ? handleCreateTrainer : handleDeleteTrainer}>
+                {type === 'non-trainer' ? 'Tornar treinador' : 'Excluir treinador'}
             </Button>
             {/* </span> */}
         </div>

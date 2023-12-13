@@ -11,6 +11,11 @@ export class AdminController {
     return this.adminService.findAllNormalUsers();
   }
 
+  @Get('/getalltrainers')
+  async getAllTrainers() {
+    return this.adminService.getAllTrainers();
+  }
+
   @Post('/addtrainer')
   async createTrainer(@Body() createTrainerDto: CreateTrainerDto) {
     return this.adminService.createTrainer(createTrainerDto);
