@@ -1,3 +1,5 @@
+import { User } from "@/models/user";
+
 type NavButton = {
 	label: string;
 	href: string;
@@ -8,6 +10,10 @@ const STUDENT = "student";
 const ADMIN = "admin";
 const TRAINER = "trainer";
 const USER = "user";
+
+export function hasRoles(roles: string[], userRoles: string[]) {
+	return roles.some((role) => userRoles.includes(role));
+}
 
 export const navButtons: NavButton[] = [
 	{

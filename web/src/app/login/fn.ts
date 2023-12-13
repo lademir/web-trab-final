@@ -15,6 +15,7 @@ export async function login(singInDtoIn: SignInDtoIn): Promise<SignInDtoOut> {
 		cookiesStore.set("access_token", response.data.access_token, {
 			path: "/",
 			maxAge: 24 * 60 * 60 * 30, // 1 day
+			sameSite: "strict",
 		});
 
 		SetStateUserStore(response.data);

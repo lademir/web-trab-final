@@ -6,18 +6,23 @@ import { UserNavButton } from "./user-nav-button";
 import { Button } from "../ui/button";
 import { logout } from "@/app/login/fn";
 import { navButtons } from "./menu-list";
+import { hasRoles } from "./menu-list";
+import { User } from "@/models/user";
 
 interface UserNavProps {
-    name: string;
+    userName: string;
+    userRoles: string[];
 }
 
 
-export const UserNav = ({ name }: UserNavProps) => {
+export const UserNav = ({ userName, userRoles }: UserNavProps) => {
 
     const router = useRouter();
 
 
-    const hello = name ? `Olá, ${name}!` : "Olá!";
+
+
+    const hello = userName ? `Olá, ${userName}!` : "Olá!";
 
     const handleLogout = async () => {
         await logout();
@@ -37,11 +42,15 @@ export const UserNav = ({ name }: UserNavProps) => {
                 </span>
                 <span className="flex items-center justify-evenly flex-1 px-16 gap-x-5">
                     {
-                        navButtons.map((item, index) => (
-                            <UserNavButton key={index} href={item.href}>
-                                {item.label}
-                            </UserNavButton>
-                        ))
+                        navButtons.map((button, index) => {
+                            if (button.roles && !hasRoles(button.roles, userRoles)) {
+                                return null;
+                            }
+                            return (
+                                <UserNavButton key={button.label} href={button.href}>{button.label}</UserNavButton>
+
+                            );
+                        })
                     }
                 </span>
                 <Button onClick={handleLogout}>
