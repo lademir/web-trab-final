@@ -1,14 +1,14 @@
-import { Exercise } from "./exercise";
-
-export type WorkoutStudent = Workout & {
-	start: Date | null;
-	end: Date | null;
-	studentId: string;
+export type exercise = {
+	reps: number;
+	series: number;
+	weight: number;
+	exercise: {
+		name: string;
+		description?: string;
+	};
 };
-
 export type Workout = {
-	id: string;
 	name: string;
-	description: string;
-	exercises: Exercise[];
+	id: string;
+	Exercises: exercise[];
 };
