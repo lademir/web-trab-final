@@ -27,4 +27,10 @@ export class TrainerController {
     console.log(createWorkoutDto);
     return this.trainerService.createWorkout(createWorkoutDto);
   }
+
+  @Get('/getstudentworkouts')
+  getStudentWorkouts(@Body() { studentId }: { studentId: string }) {
+    // console.log(studentId);
+    return this.trainerService.getStudentWorkouts(studentId);
+  }
 }

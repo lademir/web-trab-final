@@ -45,6 +45,31 @@ export class TrainerService {
     });
   }
 
+  async getStudentWorkouts(studentId: string) {
+    return await this.prisma.workout.findMany({
+      where: {
+        studentId: +studentId,
+      },
+      select: {
+        name: true,
+        id: true,
+        Exercises: {
+          select: {
+            reps: true,
+            series: true,
+            weight: true,
+            exercise: {
+              select: {
+                name: true,
+                description: true,
+              },
+            },
+          },
+        },
+      },
+    });
+  }
+
   async createWorkout(createWorkoutDto: CreateWorkoutDto) {
     const { name, studentId, exercises } = createWorkoutDto;
     return await this.prisma.workout.create({
