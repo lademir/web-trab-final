@@ -34,7 +34,20 @@ export class UserController {
   @Post()
   async createUser(@Body() userData: CreateUserDto) {
     const newUser = await this.prisma.user.create({
-      data: userData,
+      data: {
+        email: userData.email,
+        name: userData.name,
+        password: userData.password,
+        UserRoles: {
+          create: {
+            role: {
+              connect: {
+                name: 'user',
+              },
+            },
+          },
+        },
+      },
       include: {
         UserRoles: {
           select: {

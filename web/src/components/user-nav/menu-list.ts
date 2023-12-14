@@ -37,6 +37,11 @@ export const navButtons: NavButton[] = [
 		roles: [STUDENT],
 	},
 	{
+		label: "Alunos",
+		href: "/dashboard/admin/students",
+		roles: [ADMIN],
+	},
+	{
 		label: "Treinadores",
 		href: "/dashboard/admin/trainers",
 		roles: [ADMIN],

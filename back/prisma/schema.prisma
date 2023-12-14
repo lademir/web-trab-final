@@ -55,7 +55,7 @@ model Student {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  User      User     @relation(fields: [id], references: [id])
+  User      User     @relation(fields: [UserId], references: [id])
   UserId    Int      @unique
   trainerId Int?
   Trainer   Trainer? @relation("TrainerStudents", fields: [trainerId], references: [id])
@@ -74,7 +74,7 @@ model Admin {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  User      User     @relation(fields: [id], references: [id])
+  User      User     @relation(fields: [UserId], references: [id])
   UserId    Int      @unique
 }
 

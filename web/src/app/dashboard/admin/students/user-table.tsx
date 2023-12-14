@@ -1,30 +1,25 @@
-"use client";
+'use client';
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFilteredRowModel, useReactTable } from "@tanstack/react-table";
-import { useState } from "react";
-import { addTrainer, removeTrainer } from "./fn";
-import { useRouter } from "next/navigation";
-import { useToast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
-export type NonTrainer = {
-    id: number;
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { ColumnDef, flexRender, getCoreRowModel, useReactTable, ColumnFiltersState, getFilteredRowModel } from "@tanstack/react-table";
+import { useState } from "react";
+
+interface User {
     name: string;
     email: string;
-};
-
-interface NonTrainerTableProps {
-    nonTrainers: NonTrainer[];
-    type: 'trainer' | 'non-trainer';
+    id: number;
 }
 
-const columns: ColumnDef<NonTrainer>[] = [
+
+
+const columns: ColumnDef<User>[] = [
     {
         id: "select",
         header: "Selecionar",
         cell: ({ row }) => (
-            <div className="flex h-full w-full">
+            <div className="h-full flex w-10">
                 <Checkbox
                     className=""
                     checked={row.getIsSelected()}
@@ -35,83 +30,74 @@ const columns: ColumnDef<NonTrainer>[] = [
         ),
         enableSorting: false,
         enableHiding: false,
+        enableResizing: false
     },
     {
         accessorKey: 'id',
         header: 'ID',
+        cell: ({ row }) => (
+            <div className="flex h-full  w-10 ml-0">
+
+                {row.original.id}
+
+            </div>
+        ),
     },
     {
         accessorKey: 'name',
         header: 'Nome',
+        minSize: 20,
+        cell: ({ row }) => (
+            <div className="flex h-full  flex-1 max-w-full w-80">
+
+                {row.original.name}
+
+            </div>
+        ),
     },
     {
         accessorKey: 'email',
         header: 'E-mail',
+        cell: ({ row }) => (
+            <div className="flex h-full  w-28">
+
+                {row.original.email}
+
+            </div>
+        ),
     }
 ];
 
-export const NonTrainerTable = ({ nonTrainers, type }: NonTrainerTableProps) => {
+interface UserTableProps {
+    users: User[];
+
+}
+
+export function UserTable({ users }: UserTableProps) {
 
     const [selectedRow, setSelectedRow] = useState({});
-
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-    const router = useRouter();
-    const { toast } = useToast();
+
 
     const table = useReactTable({
-        data: nonTrainers,
+        data: users,
         columns,
         getCoreRowModel: getCoreRowModel(),
         onRowSelectionChange: setSelectedRow,
         onColumnFiltersChange: setColumnFilters,
         getFilteredRowModel: getFilteredRowModel(),
+
         state: {
             rowSelection: selectedRow,
-            columnFilters,
+            columnFilters
         },
         enableMultiRowSelection: false,
     });
 
-    const handleCreateTrainer = async () => {
-        try {
-            await addTrainer(table.getSelectedRowModel().rows[0].original.id);
-            router.refresh();
-            toast({
-                title: 'Treinador atribuído com sucesso!',
-            });
-        } catch (error: any) {
-            const msg = error?.response?.data?.message ?? 'Erro ao atribuir treinador!';
-            toast({
-                title: msg,
-                variant: "destructive"
-            });
-        }
-        table.setRowSelection({});
-    };
-
-    const handleDeleteTrainer = async () => {
-        try {
-            await removeTrainer(table.getSelectedRowModel().rows[0].original.id);
-            router.refresh();
-            toast({
-                title: 'Treinador excluído com sucesso!',
-            });
-        } catch (error: any) {
-            const msg = error?.response?.data?.message ?? 'Erro ao excluir treinador!';
-            toast({
-                title: msg,
-                variant: "destructive"
-            });
-        }
-        table.setRowSelection({});
-    };
-
-    // console.log(JSON.stringify(selectedRow));
     return (
         <div>
-            {/* {JSON.stringify(selectedRow)} */}
-            {table.getSelectedRowModel().rows.map(row => JSON.stringify(row.original))}
-            <div>
+            {/* {JSON.stringify(table.getAllColumns())} */}
+            <div className="flex items-center py-4">
                 <Input
                     placeholder="Digite o nome do usuário"
                     value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
@@ -121,7 +107,7 @@ export const NonTrainerTable = ({ nonTrainers, type }: NonTrainerTableProps) => 
                     className="max-w-sm"
                 />
             </div>
-            <Table>
+            <Table >
                 <TableHeader >
                     {table.getHeaderGroups().map((headerGroup) => (
                         <TableRow className="hover:bg-transparent" key={headerGroup.id}>
@@ -157,7 +143,7 @@ export const NonTrainerTable = ({ nonTrainers, type }: NonTrainerTableProps) => 
                         ))
                     ) : (
                         <TableRow>
-                            <TableCell colSpan={columns.length} className="h-24 text-center text-slate-50">
+                            <TableCell colSpan={columns.length} className="h-24 text-slate-50 text-center">
                                 Sem dados.
                             </TableCell>
                         </TableRow>
@@ -165,10 +151,10 @@ export const NonTrainerTable = ({ nonTrainers, type }: NonTrainerTableProps) => 
                 </TableBody>
             </Table>
             {/* <span className="w-full flex justify-center"> */}
-            <Button className="w-full" onClick={type === 'non-trainer' ? handleCreateTrainer : handleDeleteTrainer}>
-                {type === 'non-trainer' ? 'Tornar treinador' : 'Excluir treinador'}
+            <Button className="w-full mt-5" >
+                Adicionar aluno
             </Button>
             {/* </span> */}
         </div>
     );
-};
+}
