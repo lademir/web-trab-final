@@ -9,15 +9,15 @@ const ManageTrainersPage = async () => {
 
 
     return (
-        <div className="flex flex-col flex-1 gap-y-10">
-            <h1>Gerencia os treinadores</h1>
-            <Card className="bg-slate-700 max-w-3xl w-full self-center  border-none p-5">
+        <div className="flex flex-col items-center flex-1 gap-y-10">
+            {/* <h1>Gerencia os treinadores</h1> */}
+            <Card className="bg-slate-700 max-w-5xl w-full border-none p-5">
                 {/* <CardContent className=""> */}
                 <NonTrainerTable nonTrainers={nonTrainers} type="non-trainer" />
                 {/* </CardContent> */}
 
             </Card>
-            <Card className="bg-slate-700 max-w-3xl w-full self-center  border-none p-5">
+            <Card className="bg-slate-700 max-w-5xl w-full border-none p-5">
                 {/* <CardContent className=""> */}
                 <NonTrainerTable nonTrainers={trainers} type="trainer" />
                 {/* </CardContent> */}
