@@ -101,10 +101,10 @@ export class TrainerService {
           create: [
             ...exercises.map((exercise) => ({
               exerciseId: +exercise.id,
-              reps: exercise.reps,
-              weight: exercise.weight,
-              series: exercise.series,
-              rest: exercise.rest,
+              reps: +exercise.reps,
+              weight: +exercise.weight,
+              series: +exercise.series,
+              rest: +exercise.rest,
             })),
           ],
         },

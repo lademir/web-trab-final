@@ -148,9 +148,9 @@ export function StudentsTable({ students }: UserTableProps) {
                 </TableBody>
             </Table>
             {/* <span className="w-full flex justify-center"> */}
-            <Button className="w-full mt-5" >
+            {/* <Button className="w-full mt-5" >
                 Adicionar aluno
-            </Button>
+            </Button> */}
             {/* </span> */}
         </div>
     );

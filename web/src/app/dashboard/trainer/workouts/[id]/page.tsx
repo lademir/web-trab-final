@@ -28,7 +28,7 @@ const TrainerStundentWorkoutPage = async ({ params }: TrainerStundentWorkoutPage
                         <WorkoutTable workouts={workouts} />
                     </TabsContent>
                     <TabsContent value="add">
-                        <CreateWorkoutForm exercises={exercises} />
+                        <CreateWorkoutForm exercises={exercises} studentId={params.id} />
                     </TabsContent>
                 </Tabs>
             </Card>

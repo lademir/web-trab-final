@@ -200,9 +200,9 @@ export function WorkoutTable({ workouts }: UserTableProps) {
                 </TableBody>
             </Table>
             {/* <span className="w-full flex justify-center"> */}
-            <Button className="w-full mt-5" >
+            {/* <Button className="w-full mt-5" >
                 Adicionar treino
-            </Button>
+            </Button> */}
             {/* </span> */}
         </div>
     );

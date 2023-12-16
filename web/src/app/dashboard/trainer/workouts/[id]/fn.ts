@@ -10,6 +10,14 @@ type exercise = {
 		description?: string;
 	};
 };
+
+type CreateWorkoutExercise = {
+	reps: number;
+	series: number;
+	weight: number;
+	rest: number;
+	id: string;
+};
 type GetAllStudentWorkoutsResponse = {
 	name: string;
 	id: string;
@@ -37,6 +45,27 @@ export async function getAllExercises() {
 		const res = await api.get<{ name: string; id: string }[]>(
 			"/trainer/getallexercises"
 		);
+		return res.data;
+	} catch (error) {
+		throw error;
+	}
+}
+
+export async function createWorkout({
+	name,
+	studentId,
+	exercise,
+}: {
+	name: string;
+	studentId: string;
+	exercise: CreateWorkoutExercise[];
+}) {
+	try {
+		const res = await api.post("/trainer/createworkout", {
+			name,
+			studentId,
+			exercises: exercise,
+		});
 		return res.data;
 	} catch (error) {
 		throw error;

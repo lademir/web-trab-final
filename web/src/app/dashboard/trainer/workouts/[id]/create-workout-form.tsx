@@ -1,6 +1,6 @@
 "use client";
 import { Input } from "@/components/ui/input";
-import { getAllExercises } from "./fn";
+import { createWorkout, getAllExercises } from "./fn";
 import { ComboboxDemo } from "./exercise-combobox";
 import { useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -17,6 +17,8 @@ import {
     CommandItem,
 } from "@/components/ui/command";
 import { useForm, FieldValues } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
 
 interface IdName {
     id: string;
@@ -26,6 +28,7 @@ interface IdName {
 
 interface CreateWorkoutFormProps {
     exercises: IdName[];
+    studentId: string;
 }
 
 interface FormValues {
@@ -36,19 +39,39 @@ interface FormValues {
             series: number;
             reps: number;
             weight: number;
+            rest: number;
         }[];
     };
 }
 
-export const CreateWorkoutForm = ({ exercises }: CreateWorkoutFormProps) => {
+export const CreateWorkoutForm = ({ exercises, studentId }: CreateWorkoutFormProps) => {
     const [selectedExercises, setSelectedExercises] = useState<IdName[]>([]);
     const [open, setOpen] = useState(false);
-
+    const router = useRouter();
     const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
-    // console.log(errors?.workout?.name?.message);
-    // console.log(JSON.stringify(errors));
+
+    const { toast } = useToast();
+
+    const onSubmit = async (data: FormValues) => {
+        try {
+            await createWorkout({
+                ...data.workout,
+                studentId,
+
+            });
+            router.refresh();
+            toast({
+                title: "Treino criado com sucesso",
+            });
+        } catch (error) {
+            toast({
+                title: "Erro ao criar treino",
+                variant: "destructive"
+            });
+        }
+    };
     return (
-        <form onSubmit={handleSubmit((val) => console.log(val))}>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <Input placeholder="Nome do treino" {...register("workout.name", {
                 required: 'Nome do treino obrigatório',
             })} />
@@ -91,6 +114,7 @@ export const CreateWorkoutForm = ({ exercises }: CreateWorkoutFormProps) => {
                         <th className="py-2 px-4">Séries</th>
                         <th className="py-2 px-4">Repetições</th>
                         <th className="py-2 px-4">Peso</th>
+                        <th className="py-2 px-4">Descanso (segs)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -108,13 +132,16 @@ export const CreateWorkoutForm = ({ exercises }: CreateWorkoutFormProps) => {
                                 />
                             </td>
                             <td className="py-2 px-4">
-                                <Input type="number" min={1} placeholder="Séries" {...register(`workout.exercise.${index}.series`)} />
+                                <Input type="number" defaultValue={1} min={1} placeholder="Séries" {...register(`workout.exercise.${index}.series`)} />
                             </td>
                             <td className="py-2 px-4">
-                                <Input type="number" min={1} placeholder="Repetições" {...register(`workout.exercise.${index}.reps`)} />
+                                <Input type="number" defaultValue={1} min={1} placeholder="Repetições" {...register(`workout.exercise.${index}.reps`)} />
                             </td>
                             <td className="py-2 px-4">
-                                <Input type="number" min={1} placeholder="Peso" {...register(`workout.exercise.${index}.weight`)} />
+                                <Input type="number" defaultValue={1} min={1} placeholder="Peso" {...register(`workout.exercise.${index}.weight`)} />
+                            </td>
+                            <td className="py-2 px-4">
+                                <Input type="number" defaultValue={1} min={1} placeholder="Descanso" {...register(`workout.exercise.${index}.rest`)} />
                             </td>
                         </tr>
                     ))}
