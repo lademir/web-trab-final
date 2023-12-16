@@ -29,13 +29,13 @@ export const WorkoutDetails = ({ workout }: WorkoutDetailsProps) => {
                             </span>
                             <span className="flex items-center gap-x-4">
                                 <span className="text-xl font-semibold">{exercise.weight}kg</span>
-                                {/* <span className="text-xl font-semibold">{exercise.rest}s</span> */}
+                                <span className="text-xl font-semibold">{exercise.rest}s</span>
                             </span>
                         </div>
                     ))}
-                    <Button variant={"secondary"}>
+                    {/* <Button variant={"secondary"}>
                         Editar
-                    </Button>
+                    </Button> */}
                 </div>
             </WorkoutCard>
         </div>

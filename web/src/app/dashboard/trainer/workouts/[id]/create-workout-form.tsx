@@ -28,11 +28,23 @@ interface CreateWorkoutFormProps {
     exercises: IdName[];
 }
 
+interface FormValues {
+    workout: {
+        name: string;
+        exercise: {
+            id: string;
+            series: number;
+            reps: number;
+            weight: number;
+        }[];
+    };
+}
+
 export const CreateWorkoutForm = ({ exercises }: CreateWorkoutFormProps) => {
     const [selectedExercises, setSelectedExercises] = useState<IdName[]>([]);
     const [open, setOpen] = useState(false);
 
-    const { register, handleSubmit, formState: { errors } } = useForm<FieldValues>();
+    const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
     // console.log(errors?.workout?.name?.message);
     // console.log(JSON.stringify(errors));
     return (
@@ -70,45 +82,11 @@ export const CreateWorkoutForm = ({ exercises }: CreateWorkoutFormProps) => {
                     }
 
                 </Command>
-                {/* <Popover open={open} onOpenChange={setOpen}>
-                    <PopoverTrigger asChild>
-                        <Button
-                            variant="outline"
-                            role="combobox"
-                            aria-expanded={open}
-                            className="w-full justify-between"
-                        >
-                            Escolha o exercicio
-                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-full flex p-0">
-                        <Command className="">
-                            <CommandInput placeholder="Escolhe o exercício" />
-                            <CommandEmpty>Nenhum encontrado</CommandEmpty>
-                            <CommandGroup>
-                                {exercises.map((framework) => (
-                                    <CommandItem
-                                        key={framework.id}
-                                        value={framework.id}
-                                        onSelect={(currentValue) => {
-                                            setSelectedExercises([...selectedExercises, framework]);
-                                            setOpen(false);
-                                        }}
-                                    >
-
-                                        {framework.name}
-                                    </CommandItem>
-                                ))}
-                            </CommandGroup>
-                        </Command>
-                    </PopoverContent>
-                </Popover> */}
             </div>
 
             <table className="min-w-full">
                 <thead className="bg-gray-800 text-white">
-                    <tr>
+                    <tr className="rou">
                         <th className="py-2 px-4">Exercício</th>
                         <th className="py-2 px-4">Séries</th>
                         <th className="py-2 px-4">Repetições</th>

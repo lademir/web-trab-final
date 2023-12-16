@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post } from '@nestjs/common';
 import { TrainerService } from './trainer.service';
 import { CreateExerciseDto } from './dto/create-exercise.dto';
 import { CreateWorkoutDto } from './dto/create-workout.dto';
+import { DeleteWorkoutDto } from './dto/delete-workout.dto';
 
 @Controller('trainer')
 export class TrainerController {
@@ -32,5 +33,10 @@ export class TrainerController {
   getStudentWorkouts(@Body() { studentId }: { studentId: string }) {
     // console.log(studentId);
     return this.trainerService.getStudentWorkouts(studentId);
+  }
+
+  @Delete('/deleteworkout')
+  deleteWorkout(@Body() deleteWorkoutDto: DeleteWorkoutDto) {
+    return this.trainerService.deleteWorkout(deleteWorkoutDto);
   }
 }

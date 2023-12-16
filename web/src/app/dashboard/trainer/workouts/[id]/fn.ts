@@ -4,6 +4,7 @@ type exercise = {
 	reps: number;
 	series: number;
 	weight: number;
+	rest: number;
 	exercise: {
 		name: string;
 		description?: string;
@@ -36,6 +37,19 @@ export async function getAllExercises() {
 		const res = await api.get<{ name: string; id: string }[]>(
 			"/trainer/getallexercises"
 		);
+		return res.data;
+	} catch (error) {
+		throw error;
+	}
+}
+
+export async function deleteWorkout(workoutId: string) {
+	try {
+		const res = await api.delete("/trainer/deleteworkout", {
+			data: {
+				workoutId,
+			},
+		});
 		return res.data;
 	} catch (error) {
 		throw error;

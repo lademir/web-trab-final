@@ -2,6 +2,7 @@ export type exercise = {
 	reps: number;
 	series: number;
 	weight: number;
+	rest: number;
 	exercise: {
 		name: string;
 		description?: string;

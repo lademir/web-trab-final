@@ -3,6 +3,7 @@ type Exercise = {
   reps: number;
   weight: number;
   series: number;
+  rest: number;
 };
 
 export type CreateWorkoutDto = {

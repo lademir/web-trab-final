@@ -107,6 +107,7 @@ model ExerciseWorkout {
   series     Int      @default(1)
   reps       Int
   weight     Int
+  rest       Int      @default(0)
   assignedAt DateTime @default(now())
 
   @@id([exerciseId, workoutId])

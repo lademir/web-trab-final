@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreateExerciseDto } from './dto/create-exercise.dto';
 import { CreateWorkoutDto } from './dto/create-workout.dto';
+import { DeleteWorkoutDto } from './dto/delete-workout.dto';
 
 @Injectable()
 export class TrainerService {
@@ -58,6 +59,7 @@ export class TrainerService {
             reps: true,
             series: true,
             weight: true,
+            rest: true,
             exercise: {
               select: {
                 name: true,
@@ -87,10 +89,25 @@ export class TrainerService {
               reps: exercise.reps,
               weight: exercise.weight,
               series: exercise.series,
+              rest: exercise.rest,
             })),
           ],
         },
       },
     });
+  }
+
+  async deleteWorkout({ workoutId }: DeleteWorkoutDto) {
+    const res2 = await this.prisma.exerciseWorkout.deleteMany({
+      where: {
+        workoutId: +workoutId,
+      },
+    });
+    const res1 = await this.prisma.workout.delete({
+      where: {
+        id: +workoutId,
+      },
+    });
+    return Promise.all([res1, res2]);
   }
 }
