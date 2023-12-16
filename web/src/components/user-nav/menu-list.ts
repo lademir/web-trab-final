@@ -52,6 +52,12 @@ export const navButtons: NavButton[] = [
 		href: "/dashboard/trainer/workouts",
 		roles: [TRAINER],
 	},
+
+	{
+		label: "Exercícios",
+		href: "/dashboard/trainer/exercises",
+		roles: [TRAINER],
+	},
 	{
 		label: "Configurações",
 		href: "/dashboard/settuings",

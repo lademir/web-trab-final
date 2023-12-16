@@ -39,4 +39,9 @@ export class TrainerController {
   deleteWorkout(@Body() deleteWorkoutDto: DeleteWorkoutDto) {
     return this.trainerService.deleteWorkout(deleteWorkoutDto);
   }
+
+  @Delete('/deleteexercise')
+  deleteExercise(@Body() data: { exerciseId: string }) {
+    return this.trainerService.deleteExercise(data);
+  }
 }

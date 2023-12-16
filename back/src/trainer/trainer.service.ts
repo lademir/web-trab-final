@@ -36,6 +36,21 @@ export class TrainerService {
     });
   }
 
+  async deleteExercise({ exerciseId }: { exerciseId: string }) {
+    const res2 = await this.prisma.exerciseWorkout.deleteMany({
+      where: {
+        exerciseId: +exerciseId,
+      },
+    });
+    const res1 = await this.prisma.exercise.delete({
+      where: {
+        id: +exerciseId,
+      },
+    });
+
+    return Promise.all([res1, res2]);
+  }
+
   async getAllExercises() {
     return await this.prisma.exercise.findMany({
       select: {
