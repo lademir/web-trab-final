@@ -10,7 +10,6 @@ import {
 import { PrismaService } from 'src/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { JwtService } from '@nestjs/jwt';
-import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
 export class UserController {
