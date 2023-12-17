@@ -5,6 +5,9 @@ import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable, ColumnFiltersState, getFilteredRowModel } from "@tanstack/react-table";
 import { useState } from "react";
+import { createStudent } from "./fn";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
 
 interface User {
     name: string;
@@ -78,6 +81,10 @@ export function UserTable({ users }: UserTableProps) {
     const [selectedRow, setSelectedRow] = useState({});
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
+    const router = useRouter();
+
+    const { toast } = useToast();
+
 
     const table = useReactTable({
         data: users,
@@ -93,6 +100,23 @@ export function UserTable({ users }: UserTableProps) {
         },
         enableMultiRowSelection: false,
     });
+
+    const handleCreateStudent = async () => {
+        try {
+            await createStudent({
+                id: table.getSelectedRowModel().rows[0].original.id,
+            });
+            router.refresh();
+            toast({
+                title: "Aluno criado com sucesso",
+            });
+        } catch (error) {
+            toast({
+                title: "Erro ao criar aluno",
+                variant: "destructive"
+            });
+        }
+    };
 
     return (
         <div>
@@ -151,7 +175,7 @@ export function UserTable({ users }: UserTableProps) {
                 </TableBody>
             </Table>
             {/* <span className="w-full flex justify-center"> */}
-            <Button className="w-full mt-5" >
+            <Button onClick={handleCreateStudent} className="w-full mt-5" >
                 Adicionar aluno
             </Button>
             {/* </span> */}

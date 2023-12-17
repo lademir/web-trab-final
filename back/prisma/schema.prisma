@@ -99,6 +99,7 @@ model Workout {
 }
 
 model ExerciseWorkout {
+  id         Int      @id @default(autoincrement())
   exercise   Exercise @relation(fields: [exerciseId], references: [id])
   exerciseId Int
   workout    Workout  @relation(fields: [workoutId], references: [id])
@@ -110,7 +111,7 @@ model ExerciseWorkout {
   rest       Int      @default(0)
   assignedAt DateTime @default(now())
 
-  @@id([exerciseId, workoutId])
+  // @@id([exerciseId, workoutId])
 }
 
 // model Series {

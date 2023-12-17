@@ -16,14 +16,14 @@ export async function getAllUsers() {
 }
 
 interface CreateStudentDtoIn {
-	id: string;
+	id: number;
 }
 
 interface CreateStudentDtoOut {}
 
 export async function createStudent({ id }: CreateStudentDtoIn) {
 	try {
-		const res = await api.post("/admin/createstudent", { id });
+		const res = await api.post("/admin/adduser", { id });
 		return res.data;
 	} catch (error) {
 		throw error;
