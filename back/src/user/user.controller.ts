@@ -77,11 +77,38 @@ export class UserController {
     };
   }
 
-  @Put(':id')
-  async updateUser(@Param('id') id: number, @Body() userData: UpdateUserDto) {
+  // @Put(':id')
+  // async updateUser(@Param('id') id: number, @Body() userData: UpdateUserDto) {
+  //   return this.prisma.user.update({
+  //     where: { id },
+  //     data: userData,
+  //   });
+  // }
+
+  @Put('/changepassword')
+  async forgetPassword(@Body() data: { email: string; newPassword: string }) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        email: data.email,
+      },
+    });
+
+    if (!user) {
+      return {
+        message: 'User not found',
+      };
+    }
+
     return this.prisma.user.update({
-      where: { id },
-      data: userData,
+      where: { id: user.id },
+      data: {
+        password: data.newPassword,
+      },
+      select: {
+        name: true,
+        email: true,
+        password: false,
+      },
     });
   }
 

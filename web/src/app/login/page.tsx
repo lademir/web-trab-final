@@ -70,7 +70,7 @@ const LoginPage: NextPage = () => {
                         }
                         <div className="flex flex-col mt-1">
                             <span className="mb-4">
-                                <Link className="text-slate-300 text-xs  min-w-fit hover:text-slate-50 transition duration-200" href="/forgot-password">
+                                <Link className="text-slate-300 text-xs  min-w-fit hover:text-slate-50 transition duration-200" href="/login/forgot-password">
                                     Esqueceu a senha?
                                 </Link>
                             </span>
