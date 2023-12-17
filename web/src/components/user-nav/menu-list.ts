@@ -60,7 +60,7 @@ export const navButtons: NavButton[] = [
 	},
 	{
 		label: "Configurações",
-		href: "/dashboard/settuings",
+		href: "/dashboard/settings",
 		roles: [ADMIN, TRAINER, STUDENT],
 	},
 ];

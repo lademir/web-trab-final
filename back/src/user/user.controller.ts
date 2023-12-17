@@ -9,8 +9,8 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtService } from '@nestjs/jwt';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
 export class UserController {
@@ -77,13 +77,45 @@ export class UserController {
     };
   }
 
-  // @Put(':id')
-  // async updateUser(@Param('id') id: number, @Body() userData: UpdateUserDto) {
-  //   return this.prisma.user.update({
-  //     where: { id },
-  //     data: userData,
-  //   });
-  // }
+  @Put('/updateuser')
+  async updateUser(
+    @Body()
+    userData: {
+      email: string;
+      name: string;
+      id: number;
+      password: string;
+    },
+  ) {
+    if (userData.password === '') {
+      return this.prisma.user.update({
+        where: { id: +userData.id },
+        data: {
+          email: userData.email,
+          name: userData.name,
+        },
+        select: {
+          name: true,
+          email: true,
+          password: false,
+        },
+      });
+    } else {
+      return this.prisma.user.update({
+        where: { id: +userData.id },
+        data: {
+          email: userData.email,
+          name: userData.name,
+          password: userData.password,
+        },
+        select: {
+          name: true,
+          email: true,
+          password: false,
+        },
+      });
+    }
+  }
 
   @Put('/changepassword')
   async forgetPassword(@Body() data: { email: string; newPassword: string }) {
