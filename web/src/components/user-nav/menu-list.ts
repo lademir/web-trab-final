@@ -18,7 +18,7 @@ export function hasRoles(roles: string[], userRoles: string[]) {
 export const navButtons: NavButton[] = [
 	{
 		label: "Treinar",
-		href: "/dashboard/train",
+		href: "/dashboard/student/workout",
 		roles: [STUDENT],
 	},
 	{

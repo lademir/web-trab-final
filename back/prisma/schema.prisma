@@ -25,17 +25,16 @@ model Role {
 }
 
 model User {
-  id         Int          @id @default(autoincrement())
-  email      String       @unique
-  name       String?
-  password   String
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
-  UserRoles  UserRoles[]
-  student    Student?
-  trainer    Trainer?
-  admin      Admin?
-  WorkoutLog WorkoutLog[]
+  id        Int         @id @default(autoincrement())
+  email     String      @unique
+  name      String?
+  password  String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  UserRoles UserRoles[]
+  student   Student?
+  trainer   Trainer?
+  admin     Admin?
 }
 
 // um user pode ter varias roles (user, admin, etc)
@@ -51,14 +50,15 @@ model UserRoles {
 }
 
 model Student {
-  id        Int       @id @default(autoincrement())
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  User      User      @relation(fields: [UserId], references: [id])
-  UserId    Int       @unique
-  trainerId Int?
-  Trainer   Trainer?  @relation("TrainerStudents", fields: [trainerId], references: [id])
-  Workout   Workout[]
+  id         Int          @id @default(autoincrement())
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  User       User         @relation(fields: [UserId], references: [id])
+  UserId     Int          @unique
+  trainerId  Int?
+  Trainer    Trainer?     @relation("TrainerStudents", fields: [trainerId], references: [id])
+  Workout    Workout[]
+  WorkoutLog WorkoutLog[]
 }
 
 model Trainer {
@@ -123,14 +123,13 @@ model ExerciseWorkout {
 //   exerciseWorkoutWorkoutId  Int?
 // }
 
-// Create a workout log for a user
+// Create a workout log for a student
 model WorkoutLog {
   id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  volume    Int
-  updatedAt DateTime @updatedAt
-  User      User     @relation(fields: [userId], references: [id])
-  userId    Int
+  createdAt DateTime @default(now()) // data em que foi realizado o treino
+  // volume    Int
   Workout   Workout  @relation(fields: [workoutId], references: [id])
   workoutId Int
+  Student   Student? @relation(fields: [studentId], references: [id])
+  studentId Int?
 }

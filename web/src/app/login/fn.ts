@@ -38,7 +38,12 @@ export async function logout() {
 
 export async function SetStateUserStore(user: SignInDtoOut) {
 	UserStore.setState((state) => ({
-		...user,
+		id: user.sub,
+		name: user.name,
+		email: user.email,
+		roles: user.roles,
+		access_token: user.access_token,
+		auth: true,
 	}));
 }
 
@@ -48,6 +53,7 @@ export async function SetStateFromJwt() {
 	// console.log(jwt?.value);
 	if (jwt) {
 		const user = jwtDecode(jwt.value) as SignInDtoOut;
+		// console.log(user);
 		SetStateUserStore(user);
 	}
 }

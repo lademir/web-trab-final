@@ -64,7 +64,9 @@ export class TrainerService {
   async getStudentWorkouts(studentId: string) {
     return await this.prisma.workout.findMany({
       where: {
-        studentId: +studentId,
+        Student: {
+          UserId: +studentId,
+        },
       },
       select: {
         name: true,
@@ -94,7 +96,7 @@ export class TrainerService {
         name,
         Student: {
           connect: {
-            id: +studentId,
+            UserId: +studentId,
           },
         },
         Exercises: {

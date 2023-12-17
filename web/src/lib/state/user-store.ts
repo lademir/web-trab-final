@@ -18,8 +18,13 @@ export const UserStore = createStore<
 	auth: false,
 
 	login: (userSignInOut: SignInDtoOut) => {
-		set(userSignInOut);
-		set({ auth: true });
+		set({
+			auth: true,
+			id: userSignInOut.sub,
+			name: userSignInOut.name,
+			email: userSignInOut.email,
+			roles: userSignInOut.roles,
+		});
 		// salvar token no localstorage
 	},
 

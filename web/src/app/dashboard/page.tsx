@@ -23,21 +23,9 @@ export default function Home() {
 
   return (
     <main className="flex flex-col h-1/4 justify-between">
-      <section className='flex flex-col'>
-        <h1 className='text-3xl font-semibold mb-4'>
-          Treinos
-        </h1>
-        <div className='flex flex-row gap-x-10'>
-          {workouts.map((workout) => (
-            <WorkoutCard
-              key={workout.workoutTag}
-              workoutTag={workout.workoutTag}
-              workoutName={workout.workoutName}
-              workoutId={workout.id}
-            />
-          ))}
-        </div>
-      </section>
+      <div className='flex w-full justify-center text-center'>
+        Bem-vindo ao Dashboard do <pre><strong> BoraTreinar</strong></pre>
+      </div>
     </main>
   );
 }
