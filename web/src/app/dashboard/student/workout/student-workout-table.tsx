@@ -99,15 +99,15 @@ export function StudentsWorkoutsTable({ workouts, studentId }: UserTableProps) {
                                 <div className="flex flex-col gap-y-4 justify-center">
                                     <span>Deseja iniciar treino?</span>
                                     <span className="flex flex-row gap-x-5">
-                                        <PopoverClose className="w-full flex-1 flex">
-                                            <Button onClick={() => handleInitWorkout(row.original.id)} className="w-full" variant={"default"}>
+                                        <PopoverClose onClick={() => handleInitWorkout(row.original.id)} className="w-full flex-1 flex">
+                                            <span className="bg-slate-800 w-full px-4 py-2 hover:brightness-110 transition duration-150 rounded">
                                                 Sim
-                                            </Button>
+                                            </span>
                                         </PopoverClose>
                                         <PopoverClose className="w-full flex-1 flex">
-                                            <Button className="w-full" variant={"destructive"}>
+                                            <span className="bg-red-800 w-full px-4 py-2 hover:brightness-110 transition duration-150 rounded">
                                                 Não
-                                            </Button>
+                                            </span>
                                         </PopoverClose>
                                     </span>
                                 </div>

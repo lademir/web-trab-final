@@ -25,6 +25,28 @@ export class StudentService {
           },
         },
       },
+      select: {
+        Workout: {
+          select: {
+            name: true,
+            id: true,
+            Exercises: {
+              select: {
+                reps: true,
+                series: true,
+                weight: true,
+                rest: true,
+                exercise: {
+                  select: {
+                    name: true,
+                    description: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     });
   }
 }

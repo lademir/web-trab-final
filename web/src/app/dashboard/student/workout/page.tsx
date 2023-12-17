@@ -2,12 +2,21 @@ import { SetStateFromJwt } from "@/app/login/fn";
 import { UserStore } from "@/lib/state/user-store";
 import { getAllStudentWorkouts } from "../../trainer/workouts/[id]/fn";
 import { StudentsWorkoutsTable } from "./student-workout-table";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
+import { getWorkoutStarted } from "./fn";
+import { redirect } from "next/navigation";
 
 const WorkoutStudentPage = async () => {
     SetStateFromJwt();
     const userId = UserStore.getState().id;
     const workouts = await getAllStudentWorkouts(userId);
+
+    const workoutStarted = await getWorkoutStarted();
+
+    if (workoutStarted != null) {
+        redirect(`/dashboard/student/workout/${workoutStarted.id}`);
+    }
+
     return (
         <div className="flex w-full justify-center">
             {/* {JSON.stringify(workouts)} */}

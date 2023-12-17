@@ -21,16 +21,16 @@ export const navButtons: NavButton[] = [
 		href: "/dashboard/student/workout",
 		roles: [STUDENT],
 	},
-	{
-		label: "Meus dados antropometricos",
-		href: "/dashboard/workouts",
-		roles: [STUDENT],
-	},
-	{
-		label: "Minhas estatísticas",
-		href: "/dashboard/stats",
-		roles: [STUDENT],
-	},
+	// {
+	// 	label: "Meus dados antropometricos",
+	// 	href: "/dashboard/workouts",
+	// 	roles: [STUDENT],
+	// },
+	// {
+	// 	label: "Minhas estatísticas",
+	// 	href: "/dashboard/stats",
+	// 	roles: [STUDENT],
+	// },
 	{
 		label: "Meu histórico",
 		href: "/dashboard/history",
