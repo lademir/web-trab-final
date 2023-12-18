@@ -49,4 +49,22 @@ export class StudentService {
       },
     });
   }
+  async getWorkoutLog({ studentId }: { studentId: string }) {
+    return await this.prisma.workoutLog.findMany({
+      where: {
+        Student: {
+          UserId: +studentId,
+        },
+      },
+      select: {
+        createdAt: true,
+        Workout: {
+          select: {
+            name: true,
+            id: true,
+          },
+        },
+      },
+    });
+  }
 }

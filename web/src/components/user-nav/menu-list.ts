@@ -33,7 +33,7 @@ export const navButtons: NavButton[] = [
 	// },
 	{
 		label: "Meu histórico",
-		href: "/dashboard/history",
+		href: "/dashboard/student/history",
 		roles: [STUDENT],
 	},
 	{
